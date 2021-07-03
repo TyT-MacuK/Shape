@@ -1,17 +1,14 @@
 package by.training.shape.validation;
 
-import java.util.List;
+import by.training.shape.entity.Tetrahedron;
 
 public class TetrahedronValidator {
 
-    public static boolean checkTetrahedronIsValid(List<Double> sizesLength) {
-        return equalsSizes(sizesLength) == true && sizesLength.get(0) != 0;
-    }
+    private TetrahedronValidator() { }
 
-    private static boolean equalsSizes(List<Double> sizesLength) {
+    public static boolean checkTetrahedronIsValid(Tetrahedron tetrahedron) {
         boolean result = false;
-        if (sizesLength.get(0) == sizesLength.get(1) && sizesLength.get(1) == sizesLength.get(2) &&
-                sizesLength.get(2) == sizesLength.get(3)) {
+        if (tetrahedron.getDistanceToApex() > 0) {
             result = true;
         }
         return result;

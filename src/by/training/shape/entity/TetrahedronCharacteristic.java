@@ -1,21 +1,19 @@
 package by.training.shape.entity;
 
 public class TetrahedronCharacteristic {
-    private long id;
+    private double sizeLength;
     private double perimeter;
     private double square;
     private double volume;
 
-    public TetrahedronCharacteristic(long id, double perimeter, double square, double volume) {
-        this.id = id;
+    public TetrahedronCharacteristic(double sizeLength, double perimeter, double square, double volume) {
+        this.sizeLength = sizeLength;
         this.perimeter = perimeter;
         this.square = square;
         this.volume = volume;
     }
 
-    public long getId() {
-        return id;
-    }
+    public double getSizeLength() { return sizeLength; }
 
     public double getPerimeter() {
         return perimeter;
@@ -28,6 +26,8 @@ public class TetrahedronCharacteristic {
     public double getVolume() {
         return volume;
     }
+
+    public void setSizeLength(double sizeLength) { this.sizeLength = sizeLength; }
 
     public void setPerimeter(double perimeter) {
         this.perimeter = perimeter;
@@ -44,7 +44,7 @@ public class TetrahedronCharacteristic {
     public int hashCode() {
         final int PRIME = 31;
         int result = 1;
-        result = PRIME * result + Long.hashCode(id);
+        result = PRIME * result + Double.hashCode(sizeLength);
         result = PRIME * result + Double.hashCode(perimeter);
         result = PRIME * result + Double.hashCode(square);
         result = PRIME * result + Double.hashCode(volume);
@@ -62,7 +62,7 @@ public class TetrahedronCharacteristic {
             return false;
         }
         TetrahedronCharacteristic characteristic = (TetrahedronCharacteristic) object;
-        return id == characteristic.id &&
+        return sizeLength == characteristic.sizeLength &&
                 perimeter == characteristic.perimeter &&
                 square == characteristic.square &&
                 volume == characteristic.volume;
@@ -70,7 +70,7 @@ public class TetrahedronCharacteristic {
 
     public String toString() {
         StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append("[Tetrahedron characteristic: id = ").append(id);
+        stringBuilder.append("[Tetrahedron characteristic: size length = ").append(sizeLength);
         stringBuilder.append(", perimeter = ").append(perimeter);
         stringBuilder.append(", square = ").append(square);
         stringBuilder.append(", volume = ").append(volume);

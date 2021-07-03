@@ -1,88 +1,84 @@
 package by.training.shape.entity;
 
-import java.util.Arrays;
-import java.util.List;
+import by.training.shape.observer.TetrahedronEvent;
+import by.training.shape.observer.TetrahedronObserver;
+import by.training.shape.observer.impl.TetrahedronObserverImpl;
 
-import static by.training.shape.idGenerator.IdGenerator.nextId;
+import static by.training.shape.idgenerator.IdGenerator.nextId;
 
 public class Tetrahedron extends AbstractShape {
     private long idTetrahedron;
-    private CustomPoint firstPoint;
-    private CustomPoint secondPoint;
-    private CustomPoint thirdPoint;
-    private CustomPoint fourthPoint;
-    private double sideLength;
+    private double distanceToApex;
+    private CustomPoint centerOfTetrahedron;
+    private TetrahedronObserver observer = new TetrahedronObserverImpl();
 
-    public Tetrahedron(CustomPoint firstPoint, CustomPoint secondPoint, CustomPoint thirdPoint, CustomPoint fourthPoint) {
+    public Tetrahedron(double distanceToApex, CustomPoint centerOfTetrahedron) {
         idTetrahedron = nextId();
-        this.firstPoint = firstPoint;
-        this.secondPoint = secondPoint;
-        this.thirdPoint = thirdPoint;
-        this.fourthPoint = fourthPoint;
+        this.distanceToApex = distanceToApex;
+        this.centerOfTetrahedron = centerOfTetrahedron;
+        super.setIdAbstractShape(idTetrahedron);
     }
 
-    public long getId() {
+    public long getIdTetrahedron() {
         return idTetrahedron;
     }
 
-    public CustomPoint getFirstPoint() {
-        return firstPoint;
+    @Override
+    public double getDistanceToApex() {
+        return distanceToApex;
     }
 
-    public CustomPoint getSecondPoint() {
-        return secondPoint;
+    public CustomPoint getCenterOfTetrahedron() {
+        return centerOfTetrahedron;
     }
 
-    public CustomPoint getThirdPoint() {
-        return thirdPoint;
+    @Override
+    public void setDistanceToApex(double distanceToApex) {
+        this.distanceToApex = distanceToApex;
+        notifyObservers();
     }
 
-    public CustomPoint getFourthPoint() {
-        return fourthPoint;
+    public void setCenterOfTetrahedron(CustomPoint centerOfTetrahedron) {
+        this.centerOfTetrahedron = centerOfTetrahedron;
+        notifyObservers();
     }
 
-    public double getSideLength() {
-        return sideLength;
+    @Override
+    public void attach(TetrahedronObserver tetrahedronObserver) {
+        this.observer = tetrahedronObserver;
     }
 
-    public void setFirstPoint(CustomPoint point) {
-        this.firstPoint = point;
+    @Override
+    public void detach() {
+        this.observer = null;
     }
 
-    public void setSecondPoint(CustomPoint point) {
-        this.secondPoint = point;
+    @Override
+    public void notifyObservers() {
+        if (observer == null) {
+            return;
+        }
+        TetrahedronEvent event = new TetrahedronEvent(this);
+        observer.characteristicsChange(event);
     }
 
-    public void setThirdPoint(CustomPoint point) {
-        this.thirdPoint = point;
-    }
-
-    public void setFourthPoint(CustomPoint point) {
-        this.fourthPoint = point;
-    }
-
-    public void setSideLength(double sideLength) {
-        this.sideLength = sideLength;
-    }
-
-    public List<CustomPoint> getAllPoints() {
-        return Arrays.asList(firstPoint, secondPoint, thirdPoint, fourthPoint);
-    }
-
+    @Override
     public int hashCode() {
         final var PRIME = 31;
         var result = 1;
         result = PRIME * result + Long.hashCode(idTetrahedron);
-        result = PRIME * result + firstPoint.hashCode();
-        result = PRIME * result + secondPoint.hashCode();
-        result = PRIME * result + thirdPoint.hashCode();
-        result = PRIME * result + fourthPoint.hashCode();
+        result = PRIME * result + Double.hashCode(distanceToApex);
+        result = PRIME * result + centerOfTetrahedron.hashCode();
         return result;
     }
 
+    @Override
     public boolean equals(Object object) {
         if (this == object) {
             return true;
+        }
+        if (!super.equals(object)) {
+            return false;
         }
         if (object == null) {
             return false;
@@ -91,21 +87,23 @@ public class Tetrahedron extends AbstractShape {
             return false;
         }
         Tetrahedron tetrahedron = (Tetrahedron) object;
-        return idTetrahedron == tetrahedron.idTetrahedron &&
-                firstPoint.hashCode() == tetrahedron.firstPoint.hashCode() &&
-                secondPoint.hashCode() == tetrahedron.secondPoint.hashCode() &&
-                thirdPoint.hashCode() == tetrahedron.thirdPoint.hashCode() &&
-                fourthPoint.hashCode() == tetrahedron.fourthPoint.hashCode();
+        if (idTetrahedron != idTetrahedron) {
+            return false;
+        }
+        if (distanceToApex != tetrahedron.distanceToApex) {
+            return false;
+        }
+        return centerOfTetrahedron != null ? this.centerOfTetrahedron.equals(centerOfTetrahedron) : tetrahedron.centerOfTetrahedron == centerOfTetrahedron;
+
     }
 
+    @Override
     public String toString() {
-        var stringBuilder = new StringBuilder();
+        StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append("[Tetrahedron: id = ").append(idTetrahedron);
-        stringBuilder.append(", first point ").append(firstPoint.toString());
-        stringBuilder.append(", second point ").append(secondPoint.toString());
-        stringBuilder.append(", third point ").append(thirdPoint.toString());
-        stringBuilder.append(", fourth point ").append(fourthPoint.toString());
-        stringBuilder.append("]");
+        stringBuilder.append(", distance to apex = ").append(distanceToApex);
+        stringBuilder.append(", ").append(centerOfTetrahedron.toString());
+        stringBuilder.append("]\n");
         return stringBuilder.toString();
     }
 }

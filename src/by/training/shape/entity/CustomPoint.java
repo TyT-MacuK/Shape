@@ -39,12 +39,12 @@ public class CustomPoint {
     }
 
     public int hashCode() {
-        final double PRIME = 31;
-        double result = 1;
-        result = PRIME * result + x;
-        result = PRIME * result + y;
-        result = PRIME * result + z;
-        return (int) result;
+        final int PRIME = 31;
+        int result = 1;
+        result = PRIME * result + Double.hashCode(x);
+        result = PRIME * result + Double.hashCode(y);
+        result = PRIME * result + Double.hashCode(z);
+        return result;
     }
 
     public boolean equals(Object object) {
