@@ -9,6 +9,7 @@ public interface TetrahedronAction {
     double calculatePerimeter(double sideLength);
     double calculateSquare(double sideLength);
     double calculateVolume(double sideLength);
+    double calculateVolumeRatios(double distanceToApex);
     boolean checkCrossingWithXAndZ(List<CustomPoint> tetrahedronPoints);
     boolean checkCrossingWithYAndZ(List<CustomPoint> tetrahedronPoints);
     boolean checkCrossingWithXAndY(List<CustomPoint> tetrahedronPoints);

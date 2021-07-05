@@ -11,11 +11,11 @@ import java.util.List;
 public class TetrahedronActionImpl implements TetrahedronAction {
 
     private static final Logger logger = LogManager.getLogger();
-    private static final int TWO = 2;
-    private static final int THREE = 3;
-    private static final int NUMBERS_OF_SIDES = 4;
-    private static final int SIX = 6;
-    private static final int TWELVE = 12;
+    private static final double TWO = 2;
+    private static final double THREE = 3;
+    private static final double NUMBERS_OF_SIDES = 4;
+    private static final double SIX = 6;
+    private static final double TWELVE = 12;
 
     @Override
     public double calculateSizeLength(double distanceToApex) {
@@ -46,6 +46,18 @@ public class TetrahedronActionImpl implements TetrahedronAction {
         logger.log(Level.INFO, "Method: calculateVolume");
         double result = Math.pow(sideLength, THREE) * Math.sqrt(TWO) / TWELVE;
         logger.log(Level.INFO, "volume = {}", result);
+        return result;
+    }
+
+    @Override
+    public double calculateVolumeRatios(double distanceToApex) {
+        logger.log(Level.INFO, "Method: calculateVolumeRatios");
+        double bigSize = calculateSizeLength(distanceToApex);
+        double smallSize = distanceToApex / Math.sqrt(TWO / THREE);
+        double semiPerimeter = Math.sqrt(smallSize * THREE / TWO);
+        double smallSquare = Math.sqrt(semiPerimeter * (semiPerimeter - smallSize) * THREE);
+        double result = calculateVolume(bigSize) / (smallSquare / THREE);
+        logger.log(Level.INFO, "volume ratios = {}", result);
         return result;
     }
 

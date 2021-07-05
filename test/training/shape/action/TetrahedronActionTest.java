@@ -45,31 +45,38 @@ public class TetrahedronActionTest {
         };
     }
 
-    @Test(description = "Find the size length")
+    @Test(description = "Calculate the size length")
     public void calculateSizeLengthTest() {
         double expected = 1.6329931618554523;
         double actual = action.calculateSizeLength(distanceToApex);
         assertEquals(expected, actual, DELTA);
     }
 
-    @Test(description = "Find the perimeter")
+    @Test(description = "Calculate the perimeter")
     public void calculatePerimeter() {
         double expected = 4.0;
         double actual = action.calculatePerimeter(distanceToApex);
         assertEquals(expected, actual, DELTA);
     }
 
-    @Test(description = "Find the square")
+    @Test(description = "Calculate the square")
     public void calculateSquareTest() {
         double expected = 1.7320508075688772;
         double actual = action.calculateSquare(distanceToApex);
         assertEquals(expected, actual, DELTA);
     }
 
-    @Test(description = "Find the volume")
+    @Test(description = "Calculate the volume")
     public void calculateVolumeTest() {
         double expected = 0.11785113019775793;
         double actual = action.calculateVolume(distanceToApex);
+        assertEquals(expected, actual, DELTA);
+    }
+
+    @Test(description = "Calculate volume ratios")
+    public void calculateVolumeRatiosTest() {
+        double expected = 2.1122;
+        double actual = action.calculateVolumeRatios(distanceToApex);
         assertEquals(expected, actual, DELTA);
     }
 
